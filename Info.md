@@ -8,7 +8,7 @@
     
     <ul>
 
-      <a href="index.html"><li>Home</li></a>
+      <a href="index.md"><li>Home</li></a>
       <a href="Info.html"><li>Info</li></a>
       <a href="Images.html"><li>Images</li></a>
       <a href="Types.html"><li>Types</li></a>
