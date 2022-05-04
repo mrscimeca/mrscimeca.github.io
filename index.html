@@ -1,6 +1,12 @@
 <!DOCTYPE html> 
 <html>
   <head>
+  
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8">
+	
   <link rel="stylesheet"type="text/css" href="new-1.css">  
   </head>
   
@@ -29,5 +35,332 @@
     
     
     
+
+
+ 
+    <script>
+
+    function setup() {
+      createCanvas(400, 400);
+    }
+    //variables for pumpkin
+    var pmk = {
+        x:185,
+        y:286,
+        w:204,
+        h:182,
+        inx:0,
+        iny:0
+        };
+
+    var eye = {
+      x:-11,
+      y:-36,
+      w:-5,
+      h: 6,
+      dis:-99
+    };
+
+    var mouth = {
+      x:0,
+      y:0,
+      w:0,
+      h: 0
+
+
+    };
+
+    //flicker function(turned off)
+    var flic;
+    var eyec = [255, 0, 0, 163, 10, 10,255, 191, 0,161, 124, 11];
+    var eyefi = [];
+    var eyefo = [];
+
+    //button class
+    var Bttn = function(x,y,w,h,txt){
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.txt = txt;
+
+    };
+    //buttons
+    var wbutton = new Bttn(136,8,75,27,"Width");
+    var hbutton = new Bttn(136, 35, 75, 27, "Height");
+    var ewbutton = new Bttn(136, 62, 75, 27, "Eye Dis.");
+
+
+    Bttn.prototype.draw = function(){
+
+      fill(67, 247, 57);
+      rect(this.x,this.y,this.w,this.h);
+
+      fill(0, 0, 0);
+      text(this.txt,this.x+18,this.y+17);
+    };
+
+    var check_button = function(bttn){
+       if (mouseX>bttn.x&&mouseX<bttn.x+bttn.w&&mouseY>bttn.y&&mouseY<bttn.y+bttn.h){
+             return true;
+         }
+    };
+    var flicker = function(){
+
+
+        if (random(100)>100){
+            flic = false;
+
+        }else{flic = true;}
+
+        if (flic === true){
+            eyefi = [eyec[0],eyec[1],eyec[2]];
+            eyefo = [eyec[3],eyec[4],eyec[5]];
+
+        } else {
+            eyefi = [eyec[6],eyec[7],eyec[8]];
+            eyefo = [eyec[9],eyec[10],eyec[1]];
+
+        }
+
+    };
+
+    //parts of the pumk
+    var build_mouth = function(x, y, w, h){
+      fill(255, 0, 0);
+      beginShape();
+        vertex(0+x+w, 0+y-h);       //top left
+
+        vertex(51+x+w, 22+y-h);     //first tooth down
+        vertex(85+x+w, 8+y-h);
+
+        vertex(128+x+w, 22+y-h);    //second tooth down
+
+        vertex(200+x+w, 0+y-h);     //top right
+        vertex(180+x+w, 50+y-h);    //bottom right
+
+        vertex(164+x+w, 33+y-h);    //first tooth up
+        vertex(136+x+w, 50+y-h);
+
+        vertex(90+x+w, 33+y-h);    //second tooth up
+        vertex(57+x+w, 50+y-h);
+
+        vertex(32+x+w, 33+y-h);    //third tooth up
+        vertex(23+x+w, 50+y-h);
+
+        vertex(20+x+w, 50+y-h);     //bottom left
+      endShape(CLOSE);
+
+};
+    var build_eye= function(x,y,w,h,eyex, eyey,eyew, eyeh, eyed,flic){
+
+
+
+         //pmk eye left
+        fill(eyefi[0],eyefi[1],eyefi[2]);
+        triangle(
+            x +1 + eyex +eyew-eyed, y+16 + eyey +eyeh,
+            x -84 + eyex-eyew-eyed, y+20+ eyey+eyeh,
+            x -47 + eyex-eyed, y+-37+ eyey-eyeh
+            );
+
+        fill(eyefo[0],eyefo[1],eyefo[2]);
+        quad(
+            x +-91+ eyex-eyew-eyed, y+23+ eyey+eyeh,
+            x-84+ eyex-eyew-eyed, y+20+ eyey+eyeh,
+            x+-47+ eyex-eyed, y+-37+ eyey-eyeh,
+            x +-53+ eyex-eyed, y+-44+ eyey-eyeh
+            );
+
+        quad(
+            x +13+ eyex+eyew-eyed, y+23+ eyey+eyeh,
+            x-1+ eyex+eyew-eyed, y+16+ eyey+eyeh,
+            x+-56+ eyex-eyed, y+-37+ eyey-eyeh,
+            x +-53+ eyex-eyed, y+-44+ eyey-eyeh
+            );
+
+
+
+        //pmk eye right
+        fill(eyefi[0],eyefi[1],eyefi[2]);
+        triangle(
+            x -1+ eyex -eyew+eyed, y+16+ eyey+eyeh,
+            x+84+ eyex +eyew+eyed, y+20+ eyey+eyeh,
+            x+47+ eyex+eyed, y+-37+ eyey-eyeh
+            );
+
+        fill(eyefo[0],eyefo[1],eyefo[2]);
+        quad(
+            x + 91 + eyex + eyew +eyed, y + 23 + eyey +eyeh,
+            x + 84 + eyex + eyew +eyed, y + 20 + eyey + eyeh,
+            x + 47 + eyex + eyed, y - 37 + eyey - eyeh,
+            x + 53 + eyex + eyed, y - 44 + eyey - eyeh
+            );
+
+        quad(
+            x -13+ eyex-eyew+eyed, y+23+ eyey+eyeh,
+            x+1+ eyex-eyew+eyed, y+16+ eyey+eyeh,
+            x+56+ eyex+eyed, y+-37+ eyey-eyeh,
+            x +53+ eyex+eyed, y+-44+ eyey-eyeh
+            );
+
+
+    };
+    var build_stem = function(x, y, w, h){
+      //build stem
+        var sx;
+        var sy;
+
+        sx = x-30;
+        sy = y-140;
+
+        fill(18, 61, 9);
+
+        quad(10+sx, 10+sy,
+        30+sx, 15+sy,
+        30+sx, 70+sy,
+        20+sx, 70+sy);
+
+
+        fill(13, 43, 6);
+
+        quad(51+sx, 10+sy,
+        30+sx, 15+sy,
+        30+sx, 70+sy,
+        37+sx, 70+sy);
+
+
+          fill(57, 120, 43);
+
+           quad(51+sx, 10+sy,
+        30+sx, 15+sy,
+        10+sx, 10+sy,
+        37+sx, 5+sy);
+
+    };
+    var build_pmk = function() {
+
+
+      //build pmk
+      strokeWeight(1);
+
+      //left
+      fill(217, 130, 0);
+      ellipse(pmk.x - 45 + (pmk.inx/8), pmk.y, pmk.w, pmk.h);
+
+      //highlight
+      fill(242, 215, 172, 90);
+      arc(pmk.x - 45 + (pmk.inx/8), pmk.y, pmk.w, pmk.h, 10, 170);
+      //left shadow
+      fill(0, 0, 0, 90);
+      noStroke();
+      ellipse(pmk.x - 10 + (pmk.inx/8), pmk.y + 10, pmk.w - 3, pmk.h + 10);
+
+      //right
+      stroke(0, 0, 0);
+      fill(217, 130, 0);
+      ellipse(pmk.x + 45 + (pmk.inx/8), pmk.y, pmk.w, pmk.h);
+
+      //highlight
+      fill(242, 215, 172, 90);
+      arc(pmk.x + 45 + (pmk.inx/8), pmk.y, pmk.w, pmk.h, 10, 170);
+      //right shadow
+      fill(0, 0, 0, 90);
+      noStroke();
+      ellipse(pmk.x + 12 + (pmk.inx/8), pmk.y + 10, pmk.w - 3, pmk.h + 10);
+
+      //middle circle
+      stroke(0, 0, 0);
+      fill(217, 130, 0);
+      ellipse(pmk.x + (pmk.inx/4), pmk.y, pmk.w, pmk.h);
+
+      //highlight
+      fill(242, 215, 172, 90);
+      arc(pmk.x + (pmk.inx/4), pmk.y, pmk.w, pmk.h, 10, 170);
+
+      //middle circle shadow
+      fill(0, 0, 0, 90);
+      noStroke();
+      ellipse(pmk.x + (pmk.inx/4), pmk.y + 10, pmk.w - 69, pmk.h + 10);
+      stroke(0, 0, 0);
+      fill(217, 130, 0);
+
+
+      //mid mid
+      ellipse(pmk.x + (pmk.inx/2), pmk.y, pmk.w / 2, pmk.h);
+
+      //highlight
+      fill(242, 215, 172, 90);
+      arc(pmk.x + (pmk.inx/2), pmk.y, pmk.w / 2, pmk.h, 10, 170);
+
+
+      //pmk shadow
+      fill(0, 0, 0, 90);
+      noStroke();
+      ellipse(pmk.x + -5, pmk.y + 101, pmk.w + 124, pmk.h + -105);
+    };
+
+    //pumk
+    var pumpkin = function(x,y,w,h){
+        flicker(flic);
+        build_stem(x,y,w,h);
+        build_pmk(x,y,w,h);
+        build_eye(x,y,w,h,eye.x, eye.y,eye.w,eye.h,eye.dis);
+        build_mouth(mouth.x + 78,mouth.y + 334,mouth.w + 7,mouth.h + 0);
+    };
+
+
+    mouseDragged = function(){
+        if (check_button(wbutton)){
+            wbutton.x = mouseX-wbutton.w/2;
+            pmk.w = wbutton.x/2+120;
+
+        }
+         if (check_button(hbutton)){
+            hbutton.x = mouseX-hbutton.w/2;
+            pmk.h = hbutton.x/4+150;
+
+        }
+         if (check_button(ewbutton)){
+            ewbutton.x = mouseX-ewbutton.w/2;
+            eye.dis = ewbutton.x/6-129;
+
+        }
+    };
+
+    mouseMoved = function(){
+      eye.x = mouseX/5-40;
+      eye.y = mouseY/5-60;
+      pmk.inx = (mouseX - 200)/8;
+      mouth.x = mouseX/5-40;
+      mouth.y = mouseY/6-60;
+      //pmk.iny = (mouseY - 286)/8;
+
+    };
+
+    draw = function() {
+         background(0, 0, 0);
+         pumpkin(pmk.x,pmk.y,pmk.w,pmk.h);
+        wbutton.draw();
+        hbutton.draw();
+        ewbutton.draw();
+
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
  </body>
 </html>
