@@ -1631,13 +1631,19 @@ windowResized = None
 
 let userCode = `
 
+img = 0
+
 def setup():
+	global img
 	size(400, 400)
+	img = loadImage("ship.png")
+	
 	
 def draw():
 	background(0)
 	fill(255)
 	rect(100, 100, 50,50)
+	image(img, 20, 20)
 	
 
 
