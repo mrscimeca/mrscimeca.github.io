@@ -1642,7 +1642,7 @@ def setup():
 def draw():
 	background(0)
 	fill(255)
-	rect(100, 100, 50,50)
+	rect(200, 100, 50,50)
 	image(img, 20, 20)
 	
 
