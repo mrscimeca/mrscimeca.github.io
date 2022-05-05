@@ -1636,6 +1636,7 @@ def setup():
 	
 def draw():
 	background(0)
+	rect(100, 100, 50,50)
 	
 
 
