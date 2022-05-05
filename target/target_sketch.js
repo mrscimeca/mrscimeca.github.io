@@ -1636,8 +1636,9 @@ def setup():
 def draw():
 	background(0)
 	fill(255)
-	rect(100, 100, 50, 50)
-	text("Hello!", 100, 100)
+	rect(100, 150, 50, 50)
+	textSize(50)
+	text("Hello Jonah!!", 100, 100)
         
                   
 `;
