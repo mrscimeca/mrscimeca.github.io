@@ -1636,7 +1636,7 @@ img = 0
 def setup():
 	global img
 	size(400, 400)
-	img = loadImage("ship.png")
+	img = loadImage("alien.png")
 	
 	
 def draw():
