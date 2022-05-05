@@ -1631,7 +1631,8 @@ windowResized = None
 
 let userCode = `
 
-
+def setup():
+	size(400, 400)
 	
 def draw():
 	background(0)
