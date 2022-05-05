@@ -364,34 +364,34 @@
 
     </script>
 	
-	<pre><code># Inspired by Mats Lund:
-# https://github.com/CoderMats/breakout 
-# Completely rewritten
+	<pre><code class="hljs objectivec"><span class="hljs-meta"># Inspired by Mats Lund:</span>
+<span class="hljs-meta"># https://github.com/CoderMats/breakout </span>
+<span class="hljs-meta"># Completely rewritten</span>
 
-WIDTH =  640    # canvas width
-HEIGHT = 400    # canvas height
-P_WIDTH =  50   # paddle halfwidth
-P_HEIGHT = 8    # paddle halfheight
-B_ROWS = 5      # bricks, number of rows
-B_COLS = 10     # bricks, number of columns
-B_MARGINS = 15  # margins for bricks (bottom, side)
-BALL_DIAM = 10  # diameter of ball
-FPS = 30        # frames per second
+WIDTH =  <span class="hljs-number">640</span>    <span class="hljs-meta"># canvas width</span>
+HEIGHT = <span class="hljs-number">400</span>    <span class="hljs-meta"># canvas height</span>
+P_WIDTH =  <span class="hljs-number">50</span>   <span class="hljs-meta"># paddle halfwidth</span>
+P_HEIGHT = <span class="hljs-number">8</span>    <span class="hljs-meta"># paddle halfheight</span>
+B_ROWS = <span class="hljs-number">5</span>      <span class="hljs-meta"># bricks, number of rows</span>
+B_COLS = <span class="hljs-number">10</span>     <span class="hljs-meta"># bricks, number of columns</span>
+B_MARGINS = <span class="hljs-number">15</span>  <span class="hljs-meta"># margins for bricks (bottom, side)</span>
+BALL_DIAM = <span class="hljs-number">10</span>  <span class="hljs-meta"># diameter of ball</span>
+FPS = <span class="hljs-number">30</span>        <span class="hljs-meta"># frames per second</span>
 
-# block width, height, total space
-b_width = (WIDTH - 2 * B_MARGINS) // B_COLS
-b_height = 40  
-b_gap = 15      # gap between blocks
+<span class="hljs-meta"># block width, height, total space</span>
+b_width = (WIDTH - <span class="hljs-number">2</span> * B_MARGINS) <span class="hljs-comment">// B_COLS</span>
+b_height = <span class="hljs-number">40</span>  
+b_gap = <span class="hljs-number">15</span>      <span class="hljs-meta"># gap between blocks</span>
 
-# constants, helper variables
-bw2 = b_width // 2 
-bh2 = b_height // 2
-dw = (b_width - b_gap) // 2
-dh = (b_height - b_gap) // 2
-r = BALL_DIAM // 2    # ball diameter
-y_paddle = HEIGHT - 30
+<span class="hljs-meta"># constants, helper variables</span>
+bw2 = b_width <span class="hljs-comment">// 2 </span>
+bh2 = b_height <span class="hljs-comment">// 2</span>
+dw = (b_width - b_gap) <span class="hljs-comment">// 2</span>
+dh = (b_height - b_gap) <span class="hljs-comment">// 2</span>
+r = BALL_DIAM <span class="hljs-comment">// 2    # ball diameter</span>
+y_paddle = HEIGHT - <span class="hljs-number">30</span>
 
-cell_colors = {1:"green" , 2:"blue" , 3:"red" , 4:"yellow"}
+cell_colors = {<span class="hljs-number">1</span>:<span class="hljs-string">"green"</span> , <span class="hljs-number">2</span>:<span class="hljs-string">"blue"</span> , <span class="hljs-number">3</span>:<span class="hljs-string">"red"</span> , <span class="hljs-number">4</span>:<span class="hljs-string">"yellow"</span>}
 
 game = None
 
@@ -405,138 +405,138 @@ def setup():
 
 def new_game():
     global game
-    new_level = game.level + int(game.blocks_gone)
+    new_level = game.level + <span class="hljs-keyword">int</span>(game.blocks_gone)
     game = Game(level=new_level)
         
 def draw():
     global game
-    if game.blocks_gone:
+    <span class="hljs-keyword">if</span> game.blocks_gone:
         new_game()    
-    if not game.game_over:
+    <span class="hljs-keyword">if</span> not game.game_over:
         game.paddle.x = min(WIDTH - P_WIDTH, max(mouseX, P_WIDTH))
     game.update()        
 
 def keyPressed():
-    if key == " ":
+    <span class="hljs-keyword">if</span> key == <span class="hljs-string">" "</span>:
         new_game()
 
-class Ball(object):
-    def __init__(self,level=1):
-        # ball velocity
-        self.vel = PVector(3 + int(1.5 * level),-3 - int(1.5 * level))
-        xp = WIDTH // 2 + int(random(-P_WIDTH - 40,P_WIDTH + 40))
-        yp = y_paddle - P_HEIGHT // 2 - r - 1      
-        self.pos = PVector(xp,yp)                   # ball position
+<span class="hljs-keyword">class</span> Ball(object):
+    def __init__(<span class="hljs-keyword">self</span>,level=<span class="hljs-number">1</span>):
+        <span class="hljs-meta"># ball velocity</span>
+        <span class="hljs-keyword">self</span>.vel = PVector(<span class="hljs-number">3</span> + <span class="hljs-keyword">int</span>(<span class="hljs-number">1.5</span> * level),<span class="hljs-number">-3</span> - <span class="hljs-keyword">int</span>(<span class="hljs-number">1.5</span> * level))
+        xp = WIDTH <span class="hljs-comment">// 2 + int(random(-P_WIDTH - 40,P_WIDTH + 40))</span>
+        yp = y_paddle - P_HEIGHT <span class="hljs-comment">// 2 - r - 1      </span>
+        <span class="hljs-keyword">self</span>.pos = PVector(xp,yp)                   <span class="hljs-meta"># ball position</span>
 
-    def update(self):    
-        self.pos = PVector.add(self.pos,self.vel)
-        if (self.pos.x >= WIDTH or self.pos.x <= 0):  
-            self.vel.x = -self.vel.x
-        if (self.pos.y <= 0):
-            self.vel.y = -self.vel.y
+    def update(<span class="hljs-keyword">self</span>):    
+        <span class="hljs-keyword">self</span>.pos = PVector.add(<span class="hljs-keyword">self</span>.pos,<span class="hljs-keyword">self</span>.vel)
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>.pos.x &gt;= WIDTH or <span class="hljs-keyword">self</span>.pos.x &lt;= <span class="hljs-number">0</span>):  
+            <span class="hljs-keyword">self</span>.vel.x = -<span class="hljs-keyword">self</span>.vel.x
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>.pos.y &lt;= <span class="hljs-number">0</span>):
+            <span class="hljs-keyword">self</span>.vel.y = -<span class="hljs-keyword">self</span>.vel.y
 
-class Game(object):
-    def __init__(self,level=1):
-        self.paddle = PVector(WIDTH // 2, HEIGHT - 30)
-        self.level = level
-        self.ball = Ball()
-        self.score = 0 
-        self.blocks = [int(random(1.5,4.5)) for k in  range(B_ROWS * B_COLS)]
-        self.game_over = False
-        self.blocks_gone = False
-        # x, y positions of block centers
-        self.centers = [((i % B_COLS) * b_width + B_MARGINS + bw2,
-                         b_height * (i // B_COLS) + B_MARGINS + bh2) 
-                         for i in range(B_ROWS * B_COLS)]
+<span class="hljs-keyword">class</span> Game(object):
+    def __init__(<span class="hljs-keyword">self</span>,level=<span class="hljs-number">1</span>):
+        <span class="hljs-keyword">self</span>.paddle = PVector(WIDTH <span class="hljs-comment">// 2, HEIGHT - 30)</span>
+        <span class="hljs-keyword">self</span>.level = level
+        <span class="hljs-keyword">self</span>.ball = Ball()
+        <span class="hljs-keyword">self</span>.score = <span class="hljs-number">0</span> 
+        <span class="hljs-keyword">self</span>.blocks = [<span class="hljs-keyword">int</span>(random(<span class="hljs-number">1.5</span>,<span class="hljs-number">4.5</span>)) <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span>  range(B_ROWS * B_COLS)]
+        <span class="hljs-keyword">self</span>.game_over = False
+        <span class="hljs-keyword">self</span>.blocks_gone = False
+        <span class="hljs-meta"># x, y positions of block centers</span>
+        <span class="hljs-keyword">self</span>.centers = [((i % B_COLS) * b_width + B_MARGINS + bw2,
+                         b_height * (i <span class="hljs-comment">// B_COLS) + B_MARGINS + bh2) </span>
+                         <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(B_ROWS * B_COLS)]
 
-    def update_ball(self):
-        self.ball.update()
-        px, py = self.paddle.x, self.paddle.y
-        if ((px - P_WIDTH -r) <= self.ball.pos.x
-             <= (px + P_WIDTH + r) and 
-            (py - P_HEIGHT - r <= self.ball.pos.y 
-             <= py - P_HEIGHT)):
-            # ball is hitting paddle rectangle, reverse y_speed
-            self.ball.vel.y = -self.ball.vel.y
-            self.score = self.score + 1
-        fill(100,100,200)
-        ellipse(self.ball.pos.x, self.ball.pos.y, BALL_DIAM, BALL_DIAM)
+    def update_ball(<span class="hljs-keyword">self</span>):
+        <span class="hljs-keyword">self</span>.ball.update()
+        px, py = <span class="hljs-keyword">self</span>.paddle.x, <span class="hljs-keyword">self</span>.paddle.y
+        <span class="hljs-keyword">if</span> ((px - P_WIDTH -r) &lt;= <span class="hljs-keyword">self</span>.ball.pos.x
+             &lt;= (px + P_WIDTH + r) and 
+            (py - P_HEIGHT - r &lt;= <span class="hljs-keyword">self</span>.ball.pos.y 
+             &lt;= py - P_HEIGHT)):
+            <span class="hljs-meta"># ball is hitting paddle rectangle, reverse y_speed</span>
+            <span class="hljs-keyword">self</span>.ball.vel.y = -<span class="hljs-keyword">self</span>.ball.vel.y
+            <span class="hljs-keyword">self</span>.score = <span class="hljs-keyword">self</span>.score + <span class="hljs-number">1</span>
+        fill(<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">200</span>)
+        ellipse(<span class="hljs-keyword">self</span>.ball.pos.x, <span class="hljs-keyword">self</span>.ball.pos.y, BALL_DIAM, BALL_DIAM)
 
             
-    def update_paddle(self):
-        fill(0,255,0)
-        rect(self.paddle.x, self.paddle.y, 2 * P_WIDTH, 2* P_HEIGHT)
-        if (self.ball.pos.y >= HEIGHT):
-            fill(255) 
-            textSize(40)
+    def update_paddle(<span class="hljs-keyword">self</span>):
+        fill(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>,<span class="hljs-number">0</span>)
+        rect(<span class="hljs-keyword">self</span>.paddle.x, <span class="hljs-keyword">self</span>.paddle.y, <span class="hljs-number">2</span> * P_WIDTH, <span class="hljs-number">2</span>* P_HEIGHT)
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>.ball.pos.y &gt;= HEIGHT):
+            fill(<span class="hljs-number">255</span>) 
+            textSize(<span class="hljs-number">40</span>)
             textAlign(CENTER)
-            text("Game over", WIDTH // 2, HEIGHT // 2 + 40)
-            self.game_over = True 
+            text(<span class="hljs-string">"Game over"</span>, WIDTH <span class="hljs-comment">// 2, HEIGHT // 2 + 40)</span>
+            <span class="hljs-keyword">self</span>.game_over = True 
     
-    def update_texts(self):            
-        background(25)
+    def update_texts(<span class="hljs-keyword">self</span>):            
+        background(<span class="hljs-number">25</span>)
         noStroke()
-        # Set fill color to white
-        fill(255)
-        # Display score
-        textSize(16)
+        <span class="hljs-meta"># Set fill color to white</span>
+        fill(<span class="hljs-number">255</span>)
+        <span class="hljs-meta"># Display score</span>
+        textSize(<span class="hljs-number">16</span>)
         textAlign(RIGHT)
-        text("Score", 80, HEIGHT - 6)
+        text(<span class="hljs-string">"Score"</span>, <span class="hljs-number">80</span>, HEIGHT - <span class="hljs-number">6</span>)
         textAlign(LEFT)
-        text(self.score, 90, HEIGHT - 6)
-        # text("Frames: %.1f" %frameRate(), 130, HEIGHT - 6) 
-        # Display level
+        text(<span class="hljs-keyword">self</span>.score, <span class="hljs-number">90</span>, HEIGHT - <span class="hljs-number">6</span>)
+        <span class="hljs-meta"># text(<span class="hljs-meta-string">"Frames: %.1f"</span> %frameRate(), 130, HEIGHT - 6) </span>
+        <span class="hljs-meta"># Display level</span>
         textAlign(RIGHT)
-        text("Level", WIDTH - 50, HEIGHT - 6)
+        text(<span class="hljs-string">"Level"</span>, WIDTH - <span class="hljs-number">50</span>, HEIGHT - <span class="hljs-number">6</span>)
         textAlign(LEFT)
-        text(self.level, WIDTH - 40, HEIGHT - 6)
+        text(<span class="hljs-keyword">self</span>.level, WIDTH - <span class="hljs-number">40</span>, HEIGHT - <span class="hljs-number">6</span>)
 
-    def update_blocks(self):
-        self.blocks_gone = True
-        # Loop through all the potential blocks
+    def update_blocks(<span class="hljs-keyword">self</span>):
+        <span class="hljs-keyword">self</span>.blocks_gone = True
+        <span class="hljs-meta"># Loop through all the potential blocks</span>
         collide = False
 
-        for i in range(B_ROWS * B_COLS):
-            # Check if we have that block
-            if (self.blocks[i]):
-                x_cent, y_cent = self.centers[i]
-                self.blocks_gone = False
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(B_ROWS * B_COLS):
+            <span class="hljs-meta"># Check if we have that block</span>
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>.blocks[i]):
+                x_cent, y_cent = <span class="hljs-keyword">self</span>.centers[i]
+                <span class="hljs-keyword">self</span>.blocks_gone = False
                     
-                if not collide:
-                    bx, by = self.ball.pos.x, self.ball.pos.y     
-                    # check bounce on top/bottom
-                    if ((x_cent - dw - r < bx < x_cent + dw + r) and 
-                        ((y_cent + dh < by < y_cent + dh + r) or 
-                        (y_cent -dh - r < by < y_cent - dh))):
-                        self.blocks[i] = 0
-                        self.ball.vel.y = -self.ball.vel.y
-                        self.score = self.score + 5
+                <span class="hljs-keyword">if</span> not collide:
+                    bx, by = <span class="hljs-keyword">self</span>.ball.pos.x, <span class="hljs-keyword">self</span>.ball.pos.y     
+                    <span class="hljs-meta"># check bounce on top/bottom</span>
+                    <span class="hljs-keyword">if</span> ((x_cent - dw - r &lt; bx &lt; x_cent + dw + r) and 
+                        ((y_cent + dh &lt; by &lt; y_cent + dh + r) or 
+                        (y_cent -dh - r &lt; by &lt; y_cent - dh))):
+                        <span class="hljs-keyword">self</span>.blocks[i] = <span class="hljs-number">0</span>
+                        <span class="hljs-keyword">self</span>.ball.vel.y = -<span class="hljs-keyword">self</span>.ball.vel.y
+                        <span class="hljs-keyword">self</span>.score = <span class="hljs-keyword">self</span>.score + <span class="hljs-number">5</span>
                         collide = True
                      
-                    # check bounce on left/right
-                    if ((y_cent - dh - r < by < y_cent + dh + r) and 
-                        ((x_cent + dw < bx < x_cent + dw + r) or 
-                        (x_cent - dw -r < bx < x_cent - dw))):
-                        self.blocks[i] = 0
-                        self.ball.vel.x = -self.ball.vel.x
-                        self.score = self.score + 5
+                    <span class="hljs-meta"># check bounce on left/right</span>
+                    <span class="hljs-keyword">if</span> ((y_cent - dh - r &lt; by &lt; y_cent + dh + r) and 
+                        ((x_cent + dw &lt; bx &lt; x_cent + dw + r) or 
+                        (x_cent - dw -r &lt; bx &lt; x_cent - dw))):
+                        <span class="hljs-keyword">self</span>.blocks[i] = <span class="hljs-number">0</span>
+                        <span class="hljs-keyword">self</span>.ball.vel.x = -<span class="hljs-keyword">self</span>.ball.vel.x
+                        <span class="hljs-keyword">self</span>.score = <span class="hljs-keyword">self</span>.score + <span class="hljs-number">5</span>
                         collide = True
-            if collide:
-                break
+            <span class="hljs-keyword">if</span> collide:
+                <span class="hljs-keyword">break</span>
                     
-    def draw_blocks(self):
-        for i in range(B_ROWS * B_COLS):
-            if (self.blocks[i]):
-                fill(cell_colors[self.blocks[i]])
-                x_cent, y_cent = self.centers[i]
-                rect(x_cent, y_cent, 2 * dw, 2 * dh)
+    def draw_blocks(<span class="hljs-keyword">self</span>):
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(B_ROWS * B_COLS):
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>.blocks[i]):
+                fill(cell_colors[<span class="hljs-keyword">self</span>.blocks[i]])
+                x_cent, y_cent = <span class="hljs-keyword">self</span>.centers[i]
+                rect(x_cent, y_cent, <span class="hljs-number">2</span> * dw, <span class="hljs-number">2</span> * dh)
                         
-    def update(self):
-        self.update_texts()
-        self.update_ball()
-        self.update_paddle()
-        self.update_blocks()    
-        self.draw_blocks()
+    def update(<span class="hljs-keyword">self</span>):
+        <span class="hljs-keyword">self</span>.update_texts()
+        <span class="hljs-keyword">self</span>.update_ball()
+        <span class="hljs-keyword">self</span>.update_paddle()
+        <span class="hljs-keyword">self</span>.update_blocks()    
+        <span class="hljs-keyword">self</span>.draw_blocks()
         
                   </code></pre>
 
