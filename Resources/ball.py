@@ -7,7 +7,7 @@ class Ball(object):
         self.speedx = 0
         self.speedy = 0
         self.bullet = []
-        self.img = loadImage("ship.png")
+        self.img = 0
         self.w = 32
         self.h = 32
         
