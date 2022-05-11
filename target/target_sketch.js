@@ -1630,26 +1630,215 @@ windowResized = None
 `;
 
 let userCode = `
-class Test(object):
-    def __init__(self, x):
+
+
+class Bullet(object):
+    def __init__(self, x, y):
         self.x = x
+        self.y = y
+        self.speedx = 40
+        self.w = 20
+        self.h = 4
         
     def update(self):
-        self.x += 1
+        self.x += self.speedx
+    
+
         
     def render(self):
-        rect(self.x, 100, 50,50)
+        fill(255, 100,100)
+        ellipse(self.x, self.y, self.w, self.h)
 
-t1 = Test(100)
+
+class Enemy(object):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.img = loadImage("alien.png")
+        self.h = 32
+        self.w = 32
+        
+    def update(self):
+        self.move()
+
+        
+    def move(self):
+        self.x += -1
+        self.y += 0
+    
+    def isCollision(self, b):
+        if b.x + b.w > self.x and b.x - b.w < self.x + self.w and b.y > self.y - self.h/2 and b.y < self.y + self.h:
+            return True
+        else:
+            return False
+
+
+
+class Ball(object):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.speedx = 0
+        self.speedy = 0
+        self.bullet = []
+        self.img = 0
+        self.w = 32
+        self.h = 32
+        
+        self.kPressed = { "w":0, 
+                            "a":0,
+                            "s":0,
+                            "d":0}
+        
+        
+    def update(self):
+        if keyPressed == True:
+
+            if key == "w" or key == "W":
+                self.speedy -= 1
+    
+            if key == "s" or key == "S":
+                self.speedy += 1
+            
+            if key == "a" or key == "A":
+                self.speedx -= 1
+            
+            if key == "d" or key == "D":
+                self.speedx += 1
+        
+
+        #Update x and y based on speed
+        self.x += self.speedx
+        self.y += self.speedy
+        
+        self.checkIfWall()
+        
+        #Apply friction
+        self.speedx *= 0.95
+        self.speedy *= 0.95
+        
+        for b in self.bullet:
+            b.update()
+            if b.x > 1280:
+                self.bullet.remove(b)
+        
+    def render(self):
+        
+        for b in self.bullet:
+            b.render()
+           
+        image(self.img, self.x - (self.w / 2), self.y - (self.h / 2))   
+             
+        # fill(255)
+        # ellipse(self.x, self.y, 10,10)
+        
+        
+        
+    def checkIfWall(self):
+        
+        
+        if self.y < 10:
+            self.y = 12
+            self.speedy = 1
+            
+        if self.y > 720:
+            self.y = 715
+            self.speedy = -1
+            
+        if self.x < 10:
+            self.x = 12
+            self.speedx = 1
+            
+        if self.x > 1000:
+            self.x = 995
+            self.speedx = -1
+    
+    def fire(self):
+        self.bullet.append( Bullet(self.x, self.y))
+
+
+
+
+
+
+
+
+
+
+class config():
+    enemy1 = []
+    points = 0
+    startGame = False
+    WIDTH = 1280
+    HEIGHT = 720
+    mainFont = 0
+    enemy_count = 20
+
+
+ball1 = Ball(20,100)
 
 def setup():
-    size(800,800)
+    size(config.WIDTH, config.HEIGHT)
+    
+    #Sets image, needed here since processing lib
+    ball1.img = loadImage("ship.png")
+    
+    #Setup Enemies
+    for i in range(config.enemy_count):
+        config.enemy1.append(Enemy(600, i * (config.HEIGHT / config.enemy_count)))
+        
+    
+    #Set Font
+    config.mainFont = createFont("Stencil", 20)
+    textFont(config.mainFont)
     
 def draw():
     background(0)
-    t1.update()
-    t1.render()
-	
+    
+    #Title Screen
+    if config.startGame == False:
+         titleScreen()
+    else:
+        mainGame()
+
+
+def mainGame():
+    update()
+    render()
+        
+    if config.points > config.enemy_count - 1:
+        fill(255)
+        text("YOU WIN!!", 280, 180)
+
+def titleScreen():
+    text("WELCOME TO VIDEOGAME!", 280, 50)
+
+
+def update():
+    ball1.update()
+
+    for e in config.enemy1:
+        e.update()
+        for b in ball1.bullet:
+            if e.isCollision(b):
+                config.enemy1.remove(e)
+                config.points = config.points + 1
+        
+def render():
+    ball1.render()
+    
+    for e in config.enemy1:
+        e.render()
+    
+    fill(255)
+    text(config.points, 40, 20)
+    
+def mousePressed():
+    config.startGame = True
+    ball1.fire()
+
+
+
 
 
 `;
