@@ -1635,7 +1635,7 @@ from test import Test
 t1 = Test(100)
 
 def setup():
-    size(400,400)
+    size(800,800)
     
 def draw():
     background(0)
