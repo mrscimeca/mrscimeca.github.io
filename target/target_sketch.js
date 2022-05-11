@@ -1630,20 +1630,17 @@ windowResized = None
 `;
 
 let userCode = `
+from test import Test
 
-img = 0
+t1 = Test(100)
 
 def setup():
-	global img
-	size(400, 400)
-	img = loadImage("alien.png")
-	
-	
+    size(400,400)
+    
 def draw():
-	background(0)
-	fill(255)
-	rect(0, 100, 50,50)
-	image(img, 20, 20)
+    background(0)
+    t1.update()
+    t1.render()
 	
 
 
